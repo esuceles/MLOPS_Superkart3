@@ -18,14 +18,14 @@ Please enter the data below to get the sales forecast.
 
 # User input
 ProductID=st.text_input("Product ID", value=1, max_chars=6, placeholder='Enter the products unique ID')
-ProductWeight=st.number_input("Product Weight", min_value=1, max_value=30, value=1.00, step=0.01)
+ProductWeight=st.number_input("Product Weight", min_value=1.00, max_value=30.00, value=1.00, step=0.01)
 ProductSugarContent=st.selectbox("Product Sugar Content", ["Low Sugar", "No Sugar", "Regular"])
 ProductAllocatedArea=st.number_input("Product Allocated Area", value=0.001, min_value=0.001, max_value=0.500,step=0.001 )
 ProductType=st.selectbox("Product Type",["Baking Goods","Breads","Breakfast","Canned","Dairy","Frozen Foods","Fruits and Vegetables","Hard Drinks","Health and Hygiene","Household","Meat","Others","Seafood","Snack Foods","Soft Drinks","Starchy Foods"])
-ProductMRP=st.number_input("Product MRP",  value=0.0, min_value=1.00, max_value=300.00,step=0.01)
+ProductMRP=st.number_input("Product MRP",  value=1.00, min_value=1.00, max_value=300.00,step=0.01)
 StoreId=st.text_input("Store ID", value=1, max_chars=6, placeholder='Enter the stores unique ID')
 current_year = datetime.now().year
-StoreEstablishmentYear=st.number_input("Store Establishment Year", range(current_year, 1979, -1))
+StoreEstablishmentYear=st.number_input("Store Establishmet Year", range(current_year, 1979, -1))
 StoreSize=st.selectbox("Store Size", ["High", "Medium", "Low"])
 StoreLocationCityType=st.selectbox("Store Location City Type", ["Tier 1", "Tier 2", "Tier 3"])
 StoreType=st.selectbox("Store Type",["Departmental Store","Food Mart","Supermarket Type1","Supermarket Type2"])
