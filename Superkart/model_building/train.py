@@ -70,7 +70,7 @@ param_grid = {
 model_pipeline = make_pipeline(preprocessor, rf_model)
 
 # Grid search with cross-validation
-grid_search = GridSearchCV(model_pipeline, param_grid, cv=5, scoring='r2', n_jobs=-1)
+grid_search = GridSearchCV(model_pipeline, param_grid, cv=5, scoring='r2_score', n_jobs=-1)
 grid_search.fit(Xtrain, ytrain)
 
 # Best model
