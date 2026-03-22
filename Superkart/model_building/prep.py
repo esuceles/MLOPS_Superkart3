@@ -18,6 +18,8 @@ print("Dataset loaded successfully.")
 
 # Drop the unique identifier
 df.drop(columns=['Product_Id','Store_Id'], inplace=True)
+# Replace the reg value to Regular
+df['Product_Sugar_Content'] = df['Product_Sugar_Content'].replace(['reg'],"Regular")
 
 # Encoding the categorical 'Type' column
 
