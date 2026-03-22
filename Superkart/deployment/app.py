@@ -1,3 +1,4 @@
+%%writefile Superkart/deployment/app.py
 import streamlit as st
 import pandas as pd
 from huggingface_hub import hf_hub_download
@@ -17,11 +18,11 @@ Please enter the data below to get the sales forecast.
 
 # User input
 ProductID=st.text_input("Product ID", value=1, max_chars=6, placeholder='Enter the products unique ID')
-ProductWeight=st.number_input("Product Weight", min_value=1, max_value=30)
+ProductWeight=st.number_input("Product Weight", min_value=1, max_value=30, value=1.00, step=0.01)
 ProductSugarContent=st.selectbox("Product Sugar Content", ["Low Sugar", "No Sugar", "Regular"])
-ProductAllocatedArea=st.number_input("Product Allocated Area", value=0.0, min_value=0.0, max_value=0.5, format="%.3f")
+ProductAllocatedArea=st.number_input("Product Allocated Area", value=0.001, min_value=0.001, max_value=0.500,step=0.001 )
 ProductType=st.selectbox("Product Type",["Baking Goods","Breads","Breakfast","Canned","Dairy","Frozen Foods","Fruits and Vegetables","Hard Drinks","Health and Hygiene","Household","Meat","Others","Seafood","Snack Foods","Soft Drinks","Starchy Foods"])
-ProductMRP=st.number_input("Product MRP",  value=0.0, min_value=1.0, max_value=300,format="%.2f")
+ProductMRP=st.number_input("Product MRP",  value=0.0, min_value=1.00, max_value=300.00,step=0.01)
 StoreId=st.text_input("Store ID", value=1, max_chars=6, placeholder='Enter the stores unique ID')
 current_year = datetime.now().year
 StoreEstablishmentYear=st.number_input("Store Establishment Year", range(current_year, 1979, -1))
