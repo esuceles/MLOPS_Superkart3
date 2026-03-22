@@ -33,7 +33,7 @@ ytest = pd.read_csv(ytest_path)
 # One-hot encode 'Type' and scale numeric features
 numeric_features = [
     'Product_Weight',
-    'Product_Allocated_Area'
+    'Product_Allocated_Area',
     'Product_MRP',
     'Store_Establishment_Year',
     ]
