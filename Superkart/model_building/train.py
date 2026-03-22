@@ -4,17 +4,12 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import make_column_transformer
 from sklearn.pipeline import make_pipeline
 # for model training, tuning, and evaluation
-from sklearn.ensemble import RandomForestRegressor
+import xgboost as xgb 
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
     mean_squared_error,
     mean_absolute_error,
-    r2_score,
-    mean_absolute_percentage_error)
+    r2_score)
 import joblib
 # for creating a folder
 import os
@@ -57,20 +52,23 @@ preprocessor = make_column_transformer(
 )
 
 # Define XGBoost model
-rf_model = RandomForestRegressor(random_state=42)
+xgb_model = xgb.XGBRegressor(random_state=42, objective="reg:squarederror")
 
 # Define hyperparameter grid
 param_grid = {
-    'randomforestregressor__max_depth':[3, 4, 5, 6],
-    'randomforestregressor__max_features': ['sqrt','log2',None],
-    'randomforestregressor__n_estimators': [50, 75, 100, 125, 150]
+   'xgbregressor__n_estimators': [50, 100],
+    'xgbregressor__max_depth': [2, 3],
+    'xgbregressor__learning_rate': [0.01, 0.05],
+    'xgbregressor__colsample_bytree': [0.6, 0.8],
+    'xgbregressor__subsample': [0.6, 0.8],
+    'xgbregressor__reg_lambda': [0.5, 1],
 }
 
 # Create pipeline
-model_pipeline = make_pipeline(preprocessor, rf_model)
+model_pipeline = make_pipeline(preprocessor, xgb_model)
 
 # Grid search with cross-validation
-grid_search = GridSearchCV(model_pipeline, param_grid, cv=5, scoring='r2_score', n_jobs=-1)
+grid_search = GridSearchCV(model_pipeline, param_grid, cv=5, scoring='neg_mean_squared_error', n_jobs=-1)
 grid_search.fit(Xtrain, ytrain)
 
 # Best model
@@ -82,6 +80,17 @@ y_pred_train = best_model.predict(Xtrain)
 
 # Predict on test set
 y_pred_test = best_model.predict(Xtest)
+
+# Evaluation
+print("\nTraining Performance:")
+print("MAE:", mean_absolute_error(ytrain, y_pred_train))
+print("RMSE:", np.sqrt(mean_squared_error(ytrain, y_pred_train)))
+print("R²:", r2_score(ytrain, y_pred_train))
+
+print("\nTest Performance:")
+print("MAE:", mean_absolute_error(ytest, y_pred_test))
+print("RMSE:", np.sqrt(mean_squared_error(ytest, y_pred_test)))
+print("R²:", r2_score(ytest, y_pred_test))
 
 # Save best model
 joblib.dump(best_model, "superkart_v1.joblib")
