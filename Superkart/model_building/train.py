@@ -13,7 +13,7 @@ from sklearn.metrics import (
     f1_score,
     mean_squared_error,
     mean_absolute_error,
-    r2,
+    r2_score,
     mean_absolute_percentage_error)
 import joblib
 # for creating a folder
